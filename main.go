@@ -19,11 +19,10 @@ var all map[string]*link.Session = map[string]*link.Session{}
 func main() {
 	proto := link.PacketN(4, binary.BigEndian)
 	server, _ := link.Listen("tcp", "0.0.0.0:9999", proto)
-	fmt.Println("GoBo is online , and wait for Client's msg...")
+	fmt.Println("GoBo is online , and wait for Client's msg...[moketao]")
 	server.AcceptLoop(func(s *link.Session) {
-		fmt.Println("session start")
+		fmt.Println("session start from " + s.Conn().RemoteAddr().String())
 		s.ReadLoop(func(msg []byte) {
-			fmt.Printf("new message: %s\n", msg)
 			var obj interface{}
 			err := json.Unmarshal(msg, &obj)
 			if err == nil {
@@ -48,9 +47,7 @@ func main() {
 				afrom := ob["from"]
 				if afrom != nil {
 					a.from = afrom.(string)
-					if _, ok := all[a.from]; !ok {
-						all[a.from] = s //记录用户
-					}
+					all[a.from] = s //记录用户
 				}
 
 				//针对哪个人
@@ -64,7 +61,7 @@ func main() {
 					}
 				}
 
-				//fmt.Println(a)
+				fmt.Printf("new message: %s\n", msg)
 
 			} else {
 				fmt.Println("格式有误")

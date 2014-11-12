@@ -19,7 +19,7 @@ var all map[string]*link.Session = map[string]*link.Session{}
 func main() {
 	proto := link.PacketN(4, binary.BigEndian)
 	server, _ := link.Listen("tcp", "0.0.0.0:9999", proto)
-	fmt.Println("I'am online , and wait for Client's msg.")
+	fmt.Println("GoBo is online , and wait for Client's msg...")
 	server.AcceptLoop(func(s *link.Session) {
 		fmt.Println("session start")
 		s.ReadLoop(func(msg []byte) {
@@ -64,7 +64,7 @@ func main() {
 					}
 				}
 
-				fmt.Println(a)
+				//fmt.Println(a)
 
 			} else {
 				fmt.Println("格式有误")
